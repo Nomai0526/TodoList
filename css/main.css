@@ -116,10 +116,12 @@ html,body{
 	height: 80%;
 }
 .todobtn{
-	display: inline-block;
+	display: flex;
 	flex: 0 0 80px;
+	flex-direction: column;
 	height: 80%;
-	background-color: blue;
+	/*background-color: blue;*/
+	justify-content: space-between;
 }
 .todotitle{
 	height: 30%;
@@ -145,4 +147,14 @@ html,body{
 .todoicon{
 	width: 100%;
 
+}
+#editbtn,#finishbtn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40%;
+	/*background-color: black;*/
+	border:1px solid grey;
+	background-color: white;
+	border-radius: 4px;
 }
