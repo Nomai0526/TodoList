@@ -158,3 +158,59 @@ html,body{
 	background-color: white;
 	border-radius: 4px;
 }
+#additemwindow{
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	left: calc(50vw - 400px);
+	top: calc(50vh - 250px);
+	height: 500px;
+	width: 800px;
+	/*background-color:pink;*/
+	flex-direction: column;
+	border: 1px solid grey;
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: 0 0 0px 10000px rgba(0,0,0,20%);
+}
+#additemtime{
+	height: 25%;
+	width: 100%;
+	/*background-color: blue;*/
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+#additemtitle{
+	height: 25%;
+	width: 100%;
+	/*background-color: blue;*/
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+#additemcontent{
+	height: 25%;
+	width: 100%;
+	/*background-color: blue;*/
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.additemhead{
+	display: inline-block;
+	text-align: center;
+	height: 25%;
+	/*width: 100%;*/
+	font-size: 20px;
+	font-weight: bold;
+}
+.additeminputspan{
+	display: inline-block;
+	text-align: center;
+	height: 35%;
+	width: 80%;
+	/*background-color: pink;*/
+	border: 1px solid grey;
+	border-radius: 5px;
+}
