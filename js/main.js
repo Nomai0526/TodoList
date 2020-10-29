@@ -18,6 +18,38 @@ window.onload = function () {
 	// 	console.log("todobtn");
 	// 	console.log(o);
 	// })
+	// localStorage.clear();
+
+	const additemBtn = document.getElementById('additem');
+	const confirmBtn = document.getElementById('confirmbtn');
+	const cancalBtn = document.getElementById('cancalbtn');
+
+
+	additemBtn.addEventListener('click',function(){
+		document.getElementById('additemwindow').style.visibility = 'visible';
+		// alert("clicked");
+	}); 
+	confirmBtn.addEventListener('click',function(){
+		document.getElementById('additemwindow').style.visibility = 'hidden';
+		// alert("clicked");
+	}); 
+	cancalBtn.addEventListener('click',function(){
+		document.getElementById('additemwindow').style.visibility = 'hidden';
+		// alert("clicked");
+	}); 
+
+
+
+	let content = document.getElementById('maincontent');
+	let time1 = new Date();
+	let itemtimes = [time1];
+	let itemtitles = ['title1'];
+	let itemcontents = ['content1'];
+	for (let i = 0; i < itemtimes.length; i++) {
+		content.innerHTML = content.innerHTML + '<div class="timestamp">2020年10月24日</div>' 
+		console.log("added");
+	} 
+
 }
 // document.ready(function (argument) {
 // 	console.log('124')

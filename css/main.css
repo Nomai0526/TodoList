@@ -225,3 +225,18 @@ html,body{
 	font-size: 15px;
 	font-family: arial;
 }
+#additemwindowbtns{
+	display: flex;
+	height: 20%;
+	justify-content: space-around;
+}
+.additemwindowbtn{
+	height: 50px;
+	width: 100px;
+	border:none;
+	background-color: 
+}
+.additemwindowbtn:hover{
+	background-color: black;
+	color: white;
+}
