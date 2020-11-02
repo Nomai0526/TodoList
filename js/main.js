@@ -1,3 +1,10 @@
+// class Item {
+// 	constructor(Date,){
+
+// 	}
+// }
+
+
 window.onload = function () {
 	// 	console.log(localStorage.getItem('testKey'));
 	// // body...
@@ -20,10 +27,22 @@ window.onload = function () {
 	// })
 	// localStorage.clear();
 
-	const additemBtn = document.getElementById('additem');
+	let content = document.getElementById('maincontent');
+	let time1 = new Date();
+	let itemtimes = [time1,time1];
+	let itemtitles = ['title1'];
+	let itemcontents = ['content1'];
+	for (let i = 0; i < itemtimes.length; i++) {
+		console.log(itemtimes[i].getDay());
+		content.innerHTML = content.innerHTML + '<div class="timestamp">'+itemtimes[i].getFullYear()+'年'+(itemtimes[i].getMonth()+1)+'月'+itemtimes[i].getDate()+'日</div>' 
+		console.log("added");
+	} 
+
+	var additemBtn = document.getElementById('additem');
 	const confirmBtn = document.getElementById('confirmbtn');
 	const cancalBtn = document.getElementById('cancalbtn');
 
+	console.log(additemBtn);
 
 	additemBtn.addEventListener('click',function(){
 		document.getElementById('additemwindow').style.visibility = 'visible';
@@ -31,7 +50,7 @@ window.onload = function () {
 	}); 
 	confirmBtn.addEventListener('click',function(){
 		document.getElementById('additemwindow').style.visibility = 'hidden';
-		// alert("clicked");
+		content.innerHTML = content.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">摸鱼</div><div class="todoinfo">摸好几只鱼</div><div class="todotime">1919.8.10</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
 	}); 
 	cancalBtn.addEventListener('click',function(){
 		document.getElementById('additemwindow').style.visibility = 'hidden';
@@ -40,15 +59,7 @@ window.onload = function () {
 
 
 
-	let content = document.getElementById('maincontent');
-	let time1 = new Date();
-	let itemtimes = [time1];
-	let itemtitles = ['title1'];
-	let itemcontents = ['content1'];
-	for (let i = 0; i < itemtimes.length; i++) {
-		content.innerHTML = content.innerHTML + '<div class="timestamp">2020年10月24日</div>' 
-		console.log("added");
-	} 
+
 
 }
 // document.ready(function (argument) {
