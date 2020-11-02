@@ -7,21 +7,31 @@ class Item {
 }
 
 
-
 function contentflash() {
+	let addedtimes = [];
 	const contentbody = document.getElementById('contentbody');
 	for (let i = 0; i < localStorage.length; i++) {
 			let key = localStorage.key(i);
-			let item = localStorage.getItem(key); 
-		}	
+			let item = JSON.parse(localStorage.getItem(key));
+			if(!addedtimes.includes((new Date(item.date)).toLocaleDateString())){
+			contentbody.innerHTML = contentbody.innerHTML +  '<div class="timestamp">'+((new Date(item.date)).toLocaleDateString())+'</div>'
+			addedtimes.push((new Date(item.date)).toLocaleDateString());
+			console.log((new Date(item.date)).toLocaleDateString());
+			console.log(addedtimes)
+			}
+			contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">'+item.title+'</div><div class="todoinfo">'+item.content+'</div><div class="todotime">'+(new Date(item.date)).toLocaleString()+'</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
+		}
+
 }
 
 
 window.onload = function () {
-
+	localStorage.clear();
 	let item = new Item(new Date(),'title1','content1');
-	localStorage.setItem(JSON.stringify(item));
-
+	let item2 = new Item(new Date(),'title2','content2');
+	localStorage.setItem('item',JSON.stringify(item));
+	localStorage.setItem('item2',JSON.stringify(item2));
+	contentflash();
 	// 	console.log(localStorage.getItem('testKey'));
 	// // body...
 	// var todobtn = document.getElementById('finishbtn');
@@ -48,9 +58,9 @@ window.onload = function () {
 	let itemtimes = [time1,time1];
 	let itemtitles = ['title1'];
 	let itemcontents = ['content1'];
+	let additemwindow = document.getElementById('additemwindow');
 	for (let i = 0; i < itemtimes.length; i++) {
 		console.log(itemtimes[i].getDay());
-		contentbody.innerHTML = contentbody.innerHTML + '<div class="timestamp">'+itemtimes[i].getFullYear()+'年'+(itemtimes[i].getMonth()+1)+'月'+itemtimes[i].getDate()+'日</div>' 
 		console.log("added");
 	} 
 
@@ -66,7 +76,8 @@ window.onload = function () {
 	}); 
 	confirmBtn.addEventListener('click',function(){
 		document.getElementById('additemwindow').style.visibility = 'hidden';
-		contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">摸鱼</div><div class="todoinfo">摸好几只鱼</div><div class="todotime">1919.8.10</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
+		
+		// contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">摸鱼</div><div class="todoinfo">摸好几只鱼</div><div class="todotime">1919.8.10</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
 	}); 
 	cancalBtn.addEventListener('click',function(){
 		document.getElementById('additemwindow').style.visibility = 'hidden';

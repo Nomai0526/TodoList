@@ -81,6 +81,7 @@ html,body{
 	align-items: center;
 	justify-content: center;
 	padding: 0 10px;
+	margin: 10px 0;
 	min-width: 360px;
 }
 .topitem{
