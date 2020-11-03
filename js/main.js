@@ -6,18 +6,29 @@ class Item {
 	}
 }
 
+var items = [];
 
 function contentflash() {
+	localStorage.clear();
+	items.sort(function (item1,item2) {
+		if(item1.getTime()>item2.getTime()){
+			return true;
+		}else{
+			return false;
+		}
+	});
+	items.forEach(function (item){
+		localStorage.setItem(localStorage.length,JSON.stringify(item));
+	})
 	let addedtimes = [];
 	const contentbody = document.getElementById('contentbody');
+	contentbody.innerHTML='';
 	for (let i = 0; i < localStorage.length; i++) {
 			let key = localStorage.key(i);
 			let item = JSON.parse(localStorage.getItem(key));
 			if(!addedtimes.includes((new Date(item.date)).toLocaleDateString())){
 			contentbody.innerHTML = contentbody.innerHTML +  '<div class="timestamp">'+((new Date(item.date)).toLocaleDateString())+'</div>'
 			addedtimes.push((new Date(item.date)).toLocaleDateString());
-			console.log((new Date(item.date)).toLocaleDateString());
-			console.log(addedtimes)
 			}
 			contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">'+item.title+'</div><div class="todoinfo">'+item.content+'</div><div class="todotime">'+(new Date(item.date)).toLocaleString()+'</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
 		}
@@ -76,7 +87,15 @@ window.onload = function () {
 	}); 
 	confirmBtn.addEventListener('click',function(){
 		document.getElementById('additemwindow').style.visibility = 'hidden';
-		
+		let time = document.getElementById('additemtimeinput');
+		let title = document.getElementById('additemtitleinput');
+		let content = document.getElementById('additemcontentinput');
+		console.log(new Date(time));
+		let item = new Item(new Date(time.value),title.value,content.value);
+		items.push(item);
+		contentflash();
+
+
 		// contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">摸鱼</div><div class="todoinfo">摸好几只鱼</div><div class="todotime">1919.8.10</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
 	}); 
 	cancalBtn.addEventListener('click',function(){
