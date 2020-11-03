@@ -7,76 +7,50 @@ class Item {
 }
 
 let totalItems = [];
+let filterItems = [];
 
 
 function contentflash(items) {
-    localStorage.clear();
-    items.sort(function (item1, item2) {
+    items.sort(function (item1,item2) {
         return item1.date.getTime() - item2.date.getTime();
     });
-    items.forEach(function (item) {
-        localStorage.setItem(String(localStorage.length), JSON.stringify(item));
-    })
+    //排序
     let addedtimes = [];
     const contentbody = document.getElementById('contentbody');
     contentbody.innerHTML = '';
+    for (let i = 0; i < items.length; i++) {
+        if (!addedtimes.includes((new Date(items[i].date)).toLocaleDateString())) {
+            contentbody.innerHTML = contentbody.innerHTML + '<div class="timestamp">' + ((new Date(items[i].date)).toLocaleDateString()) + '</div>'
+            addedtimes.push((new Date(items[i].date)).toLocaleDateString());
+        }
+        //如果没有时间戳则添加
+        contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">' + items[i].title + '</div><div class="todoinfo">' + items[i].content + '</div><div class="todotime">' + (new Date(items[i].date)).toLocaleString() + '</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
+    	//添加元素
+    }
+}
+
+window.onload = function () {
     for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
         let item = JSON.parse(localStorage.getItem(key));
-        if (!addedtimes.includes((new Date(item.date)).toLocaleDateString())) {
-            contentbody.innerHTML = contentbody.innerHTML + '<div class="timestamp">' + ((new Date(item.date)).toLocaleDateString()) + '</div>'
-            addedtimes.push((new Date(item.date)).toLocaleDateString());
-        }
-        contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">' + item.title + '</div><div class="todoinfo">' + item.content + '</div><div class="todotime">' + (new Date(item.date)).toLocaleString() + '</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
+        item.date = new Date(item.date);
+        //将date字符串解析为date对象
+        totalItems.push(item);
     }
+    //读取本地存储
 
-}
-
-
-window.onload = function () {
-    localStorage.clear();
-    let item = new Item(new Date(), 'title1', 'content1');
-    let item2 = new Item(new Date(), 'title2', 'content2');
-    localStorage.setItem('item', JSON.stringify(item));
-    localStorage.setItem('item2', JSON.stringify(item2));
     contentflash(totalItems);
-    // 	console.log(localStorage.getItem('testKey'));
-    // // body...
-    // var todobtn = document.getElementById('finishbtn');
-    // var addItemBtn = document.getElementById('additem');
-    // addItemBtn.addEventListener('click',function function_name(argument) {
-    // 	// body...
-    // })
-    // todobtn.addEventListener("click",function() {
-    // 	let testobj = {
-    // 		name:'name',
-    // 		content:'content',
-    // 		time:1,
-    // 	}
-    // 	console.log(testobj);
-    // 	localStorage.setItem("testKey",testobj);
-    // 	var o = localStorage.getItem('testKey');
-    // 	console.log("todobtn");
-    // 	console.log(o);
-    // })
-    // localStorage.clear();
+    //刷新页面
 
-    let contentbody = document.getElementById('contentbody');
-    let time1 = new Date();
-    let itemtimes = [time1, time1];
-    let itemtitles = ['title1'];
-    let itemcontents = ['content1'];
-    let additemwindow = document.getElementById('additemwindow');
-    for (let i = 0; i < itemtimes.length; i++) {
-        // console.log(itemtimes[i].getDay());
-        // console.log("added");
-    }
+    const contentbody = document.getElementById('contentbody');
+    const additemwindow = document.getElementById('additemwindow');
 
-    var additemBtn = document.getElementById('additem');
+    const searchBar = document.getElementById('searchBar');
+
+    const additemBtn = document.getElementById('additem');
     const confirmBtn = document.getElementById('confirmbtn');
     const cancalBtn = document.getElementById('cancalbtn');
 
-    // console.log(additemBtn);
 
     additemBtn.addEventListener('click', function () {
         document.getElementById('additemwindow').style.visibility = 'visible';
@@ -86,13 +60,24 @@ window.onload = function () {
         let time = document.getElementById('additemtimeinput');
         let title = document.getElementById('additemtitleinput');
         let content = document.getElementById('additemcontentinput');
-        console.log(new Date(time.value).getFullYear());
         let item = new Item(new Date(time.value), title.value, content.value);
         console.log(item.date.getTime());
         totalItems.push(item);
+        localStorage.setItem(String(localStorage.length), JSON.stringify(item));
         contentflash(totalItems);
     });
     cancalBtn.addEventListener('click', function () {
         document.getElementById('additemwindow').style.visibility = 'hidden';
+    });
+    searchBar.addEventListener('keyup',function () {
+    	let key = this.value;
+    	filterItems = totalItems.filter(function (item) {
+    		if(item.title.indexOf(key)!==-1||item.content.indexOf(key)!==-1){
+    			return true;
+    		}
+    	});
+    	//修改过滤项目
+    	contentflash(filterItems);
+    	//重新渲染
     });
 }
