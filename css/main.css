@@ -149,7 +149,7 @@ html,body{
 	width: 100%;
 
 }
-#editbtn,#finishbtn{
+.editbtn,.finishbtn{
 	display: flex;
 	align-items: center;
 	justify-content: center;

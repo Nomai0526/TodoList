@@ -24,7 +24,7 @@ function contentflash(items) {
             addedtimes.push((new Date(items[i].date)).toLocaleDateString());
         }
         //如果没有时间戳则添加
-        contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">' + items[i].title + '</div><div class="todoinfo">' + items[i].content + '</div><div class="todotime">' + (new Date(items[i].date)).toLocaleString() + '</div></span><span class="todobtn"><div id="finishbtn">完成</div><div id="editbtn">删除</div></span></div>';
+        contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">' + items[i].title + '</div><div class="todoinfo">' + items[i].content + '</div><div class="todotime">' + (new Date(items[i].date)).toLocaleString() + '</div></span><span class="todobtn"><div class="finishbtn">完成</div><div class="editbtn">编辑</div></span></div>';
     	//添加元素
     }
 }
@@ -48,8 +48,13 @@ window.onload = function () {
     const searchBar = document.getElementById('searchBar');
 
     const additemBtn = document.getElementById('additem');
+    const clearAllBtn = document.getElementById('clearall');
+
     const confirmBtn = document.getElementById('confirmbtn');
     const cancalBtn = document.getElementById('cancalbtn');
+
+    const finishBtn = document.getElementsByClass('finishbtn');
+    const editBtn = document.getElementsByClass('editbtn');
 
 
     additemBtn.addEventListener('click', function () {
@@ -80,4 +85,17 @@ window.onload = function () {
     	contentflash(filterItems);
     	//重新渲染
     });
+
+    clearAllBtn.map((item)=>{
+    	item.addEventListener('click',()=>{
+    	localStorage.clear();
+    	totalItems = [];
+    	filterItems =[];
+    	contentflash(totalItems);
+    })});
+
+    finishBtn.map((item)=>{
+    	item.addEventListener('click',()=>{
+    	console.log('12');
+    })});
 }
