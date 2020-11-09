@@ -11,7 +11,7 @@ let filterItems = [];
 
 
 function contentflash(items) {
-    items.sort(function (item1,item2) {
+    items.sort(function (item1, item2) {
         return item1.date.getTime() - item2.date.getTime();
     });
     //排序
@@ -25,7 +25,20 @@ function contentflash(items) {
         }
         //如果没有时间戳则添加
         contentbody.innerHTML = contentbody.innerHTML + '<div class="todoitem"><span class="todologo"><img src="../icon/callicon.png" class="todoicon"></span><span class="todocontent"><div class="todotitle">' + items[i].title + '</div><div class="todoinfo">' + items[i].content + '</div><div class="todotime">' + (new Date(items[i].date)).toLocaleString() + '</div></span><span class="todobtn"><div class="finishbtn">完成</div><div class="editbtn">编辑</div></span></div>';
-    	//添加元素
+        //添加元素
+    }
+    const finishBtn = document.getElementsByClassName('finishbtn');
+    const editBtn = document.getElementsByClassName('editbtn');
+    console.log(finishBtn[0]);
+    for (let i = 0; i < finishBtn.length; i++) {
+        finishBtn[i].addEventListener('click', () => {
+            items.splice(i, 1);
+            contentflash(items);
+        });
+        editBtn[i].addEventListener('click', () => {
+            document.getElementById('additemwindow').style.visibility = 'visible';
+            items.splice(i, 1);
+        });
     }
 }
 
@@ -37,26 +50,22 @@ window.onload = function () {
         //将date字符串解析为date对象
         totalItems.push(item);
     }
-    //读取本地存储
 
+    //读取本地存储
     contentflash(totalItems);
+
     //刷新页面
 
     const contentbody = document.getElementById('contentbody');
-    const additemwindow = document.getElementById('additemwindow');
 
     const searchBar = document.getElementById('searchBar');
-
     const additemBtn = document.getElementById('additem');
+
     const clearAllBtn = document.getElementById('clearall');
-
     const confirmBtn = document.getElementById('confirmbtn');
+
+
     const cancalBtn = document.getElementById('cancalbtn');
-
-    const finishBtn = document.getElementsByClass('finishbtn');
-    const editBtn = document.getElementsByClass('editbtn');
-
-
     additemBtn.addEventListener('click', function () {
         document.getElementById('additemwindow').style.visibility = 'visible';
     });
@@ -74,28 +83,25 @@ window.onload = function () {
     cancalBtn.addEventListener('click', function () {
         document.getElementById('additemwindow').style.visibility = 'hidden';
     });
-    searchBar.addEventListener('keyup',function () {
-    	let key = this.value;
-    	filterItems = totalItems.filter(function (item) {
-    		if(item.title.indexOf(key)!==-1||item.content.indexOf(key)!==-1){
-    			return true;
-    		}
-    	});
-    	//修改过滤项目
-    	contentflash(filterItems);
-    	//重新渲染
+    searchBar.addEventListener('keyup', function () {
+        let key = this.value;
+        filterItems = totalItems.filter(function (item) {
+            if (item.title.indexOf(key) !== -1 || item.content.indexOf(key) !== -1) {
+                return true;
+            }
+        });
+        //修改过滤项目
+        contentflash(filterItems);
+        //重新渲染
+        console.log(finishBtn)
     });
 
-    clearAllBtn.map((item)=>{
-    	item.addEventListener('click',()=>{
-    	localStorage.clear();
-    	totalItems = [];
-    	filterItems =[];
-    	contentflash(totalItems);
-    })});
+    clearAllBtn.addEventListener('click', function () {
+        localStorage.clear();
+        totalItems = [];
+        filterItems = [];
+        contentflash(totalItems);
+    });
 
-    finishBtn.map((item)=>{
-    	item.addEventListener('click',()=>{
-    	console.log('12');
-    })});
+
 }
